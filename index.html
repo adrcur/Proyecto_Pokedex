@@ -17,6 +17,7 @@
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>
 
+    <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="/src/script/script.js"></script>
 
@@ -32,7 +33,7 @@
                 <nav class="nav nav-masthead justify-content-center float-md-end">
                     <a class="nav-link active" aria-current="page" onclick="Pagina('men1','men2','men3')" id="men1"
                         href="#">Inicio</a>
-                    <a class="nav-link" onclick="Pagina('men2','men1','men3')" id="men2" href="#">Pokemons</a>
+                    <a class="nav-link" onclick="Pagina('men2','men1','men3'); " id="men2" href="#">Pokemons</a>
                     <a class="nav-link" onclick="Pagina('men3','men1','men2')" id="men3" href="#">Buscar</a>
                 </nav>
             </div>
@@ -41,7 +42,7 @@
 
         <!-- Quitar el style a inicio -->
 
-        <main class="px-3" id="inicio" style="display: none;">
+        <main class="px-3" id="inicio" style="display: block;">
             <h1>Pokedex</h1>
             <p class="lead" id="texto">La Pokédex, en el mundo ficticio de Pokémon, es una enciclopedia electrónica
                 portátil que los entrenadores Pokémon llevan consigo para registrar automáticamente las fichas de todas
@@ -54,57 +55,38 @@
 
         </main>
 
-        <main class="px-3" id="Pokes" style="display: none;">
+        <main class="px-3 " id="Pokes" style="display: none;">
+
             <h1>Pokedex</h1>
-            <p class="lead">PokesPokesPokesPokesPokesticio de Pokémon, es una enciclopedia electrónica
-                portátil que los entrenadores Pokémon llevan consigo para registrar automáticamente las fichas de todas
-                las diversas especies Pokémon vistas y capturadas durante su viaje como entrenadores.​​</p>
-            <p class="lead">
-                <a href="#" class="btn btn-lg btn-secondary fw-bold border-white bg-white"
-                    onclick="MuestraOculta()">Buscar</a>
-            </p>
+            <scroll-container>
+                <div class="container">
+                    <div class="pokedexContenedor  row">
+                    </div>
+                </div>
+                <div>
+                    <button class="btn btn-outline-light btn-lg px-5 " type="submit" id="btn-buscar" onclick="mas()">
+                        Mas
+                    </button>
+                </div>
+
+            </scroll-container>
 
         </main>
 
 
 
+
         <!-- poner  el style none    style="display: none;"-->
-        <main class="px-3" id="Busca">
+        <main class="px-3" id="Busca" style="display: none;">
             <h1>Ingrese el nombre o numero</h1>
 
             <div class="form-outline form-white mb-4">
                 <input type="busqueda" id="bsc" class="form-control form-control-lg" />
             </div>
 
-            <button class="btn btn-outline-light btn-lg px-5" type="submit" id="btn-buscar" onclick="Api_pokemon()">
+            <button class="btn btn-outline-light btn-lg px-5" type="submit" id="btn-buscar" onclick="Busca()">
                 Buscar
             </button>
-
-
-
-
-            <!-- <div contenedor class=" row align-items-md-stretch mt-5 text-capitalize" >
-
-                <div class="text-bg-secondary">
-                    <h2 nombre></h2>
-                </div>
-                <div class="col-md-6">
-                    <img class="poke-img text-bg-dark" pokemonimg src="">
-                </div>
-                <div class="col-md-6 mt-5 text-bg-secondary">
-                    <h3 peso class="mt-5 text-bg-primary"></h3>
-                    <div class="row align-items-md-stretch mt-3">
-                        <h3 tipo1 class="col text-bg-primary"></h3>
-                        <h3 tipo2 class="col"></h3>
-                    </div>
-
-                    <h3 hab1 class="mt-3 text-bg-primary"></h3>
-                    <h3 hab2 class="text-bg-primary"></h3>
-                </div>
-
-            </div> -->
-
-
 
             <div contenedor class=" row  mt-5 text-capitalize" style="display: none;">
                 <div class="row ">

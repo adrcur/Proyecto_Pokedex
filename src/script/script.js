@@ -7,19 +7,6 @@ function MuestraOculta() {
     }
 }
 
-
-// function p(act, des1, des2) {
-
-//     var act_elem = document.getElementById(act);
-//     var act_des1 = document.getElementById(des1);
-//     var act_des2 = document.getElementById(des2);
-
-//     act_elem.classList = "nav-link active";
-//     act_des1.classList = "nav-link";
-//     act_des2.classList = "nav-link";
-
-// }
-
 function Pagina(act, des1, des2) {
 
 
@@ -50,41 +37,26 @@ function Pagina(act, des1, des2) {
     document.getElementById(o_pag2).style.display = "none";
 
 }
-var Datos_poke
-var response
-function Api_pokemon() {
-    let b_poke = document.getElementById("bsc").value;
 
+async function Api_pokemon(b_poke, opc) {
     fetch(`https://pokeapi.co/api/v2/pokemon/${b_poke}`)
         .then(data => data.json())
-        .then(response => Datos_poke(response))
-        // .then(response => Datos(response))
-        .catch(err => No_encontrado())
-    console.log(b_poke);
-}
-function Datos(response) {
-    x = response;
-    z = response.types[1] != null ? response.types[1].type.name : null;
-    //  elvisLives = response.types[1].type.name == null ? "Sip" : "Nop";
-    // document.getElementById("contenedor").style.display = "block";
+        .then(response => Datos_poke(response, opc))
+        .catch(errores => { console.error('Error', errores) })
 }
 
-function Datos_poke(datos) {
-    // document.querySelector('[imagen]');
-    img = datos.sprites.other.home.front_default;
-    // document.querySelector('[imagen]').setAttribute('src', img);
 
-    // pokeImg.setAttribute('src', sprite);
+function Busca() {
+    return Api_pokemon(document.getElementById("bsc").value, 2)
+}
 
-    // var pokeImg = document.querySelector('[pokemoning]');
-    // pokeImg.setAttribute('src', img);
-    // document.getElementById("imgpk").src = img;
+function Datos_poke(datos, opc) {
 
-    document.querySelector('[pokemonimg]').src = img;
-
+    var imagen = datos.sprites.front_default;
+    var imagen2 = datos.sprites.other.home.front_default;
     var nombre = datos.name;
     var id = datos.id;
-    var peso = datos.weight * 0.1;
+    var peso = (datos.weight * 0.1).toFixed(2);
 
     var tipo1 = datos.types[0].type.name;
     var tipo2 = datos.types[1] ? datos.types[1].type.name : null;
@@ -92,23 +64,98 @@ function Datos_poke(datos) {
     var hab1 = datos.abilities[0].ability.name;
     var hab2 = datos.abilities[1] ? datos.abilities[1].ability.name : null;
 
-   
-    
-    document.querySelector('[contenedor]').style.display = "block"; 
-    // document.querySelector('[nombre]').textContent = nombre;
+    if (opc == 1) {
+        Tarj_Datos(imagen, imagen2, nombre, id, peso, tipo1, tipo2, hab1, hab2);
+
+    } else {
+        Info_poke(imagen2, nombre, id, peso, tipo1, tipo2, hab1, hab2);
+    }
+
+}
+
+
+
+function Info_poke(r_img, nombre, id, peso, tipo1, tipo2, hab1, hab2) {
+
+    document.querySelector('[pokemonimg]').src = r_img;
+    document.querySelector('[contenedor]').style.display = "block";
     document.querySelector('[nombre]').textContent = `#${id}    ${nombre} `;
     document.querySelector('[peso]').textContent = `${peso} Kg `;
     document.querySelector('[tipo1]').textContent = tipo1;
     document.querySelector('[tipo2]').textContent = tipo2;
     document.querySelector('[hab1]').textContent = hab1;
     document.querySelector('[hab2]').textContent = hab2;
-
-    x = datos;
-    console.log(x);
-    
-    
 }
+
+
+function Tarj_Datos(imagen, imagen2, nombre, id, peso, tipo1, tipo2, hab1, hab2) {
+
+
+    const tarjeta_Contenedor = document.createElement("div");
+    // tarjeta_Contenedor.classList.add("tarjeta-contenedor");
+    tarjeta_Contenedor.classList.add("col");
+
+    const tarjeta = document.createElement("div");
+    tarjeta.classList.add("pokemon");
+
+    const img_cont = document.createElement("div");
+
+    const link = document.createElement("a");
+    link.href = "#";
+
+
+    const img = document.createElement("img");
+    img.loading = "Lazy"
+    img.src = imagen;
+    // img.id = imagen2;
+
+
+    img.onclick = function () {
+        Pagina('men3', 'men1', 'men2');
+        // Info_poke(img.id, nombre, id, peso, tipo1, tipo2, hab1, hab2);
+        Info_poke(imagen2, nombre, id, peso, tipo1, tipo2, hab1, hab2);
+    };
+
+    link.appendChild(img);
+    img_cont.appendChild(link);
+
+    const id_nombre = document.createElement("p");
+    id_nombre.textContent = `#${id}    ${nombre} `;
+
+    tarjeta.appendChild(id_nombre);
+    tarjeta.appendChild(img_cont);
+
+    tarjeta_Contenedor.appendChild(tarjeta);
+
+    const pokedex_Contenedor = document.querySelector(".pokedexContenedor");
+    pokedex_Contenedor.appendChild(tarjeta_Contenedor);
+
+}
+
 
 function No_encontrado() {
     console.log("errorrrrr");
 }
+
+
+function pokedex(ini, fin) {
+
+    for (let i = ini; i <= fin; i++) {
+
+        setTimeout(() => {
+            Api_pokemon(i, 1);
+        }, 100);
+        // Api_pokemon(i);
+
+    }
+}
+
+function mas() {
+    p_inicio = p_fin + 1;
+    p_fin = p_fin + 21;
+
+    pokedex(p_inicio, p_fin);
+}
+var p_inicio = 1;
+var p_fin = 21;
+pokedex(p_inicio, p_fin);
